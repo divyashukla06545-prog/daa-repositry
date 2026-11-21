@@ -1,0 +1,63 @@
+#include <stdio.h>
+                parent[v] = u;
+                changed = 1;
+            }
+        }
+
+        if(!changed)
+            break;
+    }
+
+    /* Check negative cycle */
+    for(j = 0; j < E; j++)
+    {
+        int u = edges[j].u;
+        int v = edges[j].v;
+        int w = edges[j].w;
+
+        if(dist[u] != INF &&
+           dist[u] + w < dist[v])
+        {
+            printf("Negative cycle detected");
+            return 0;
+        }
+    }
+
+    /* Print shortest paths */
+    for(i = 1; i <= V; i++)
+    {
+        if(i == src)
+            continue;         if(dist[i] == INF)
+        {
+            printf("%d INF None\n", i);
+        }
+        else
+        {
+            int path[MAXV + 1];
+            int count = 0;
+            int current = i;
+
+            while(current != -1)
+            {
+                path[count++] = current;
+
+                if(current == src)
+                    break;
+
+                current = parent[current];
+            }
+
+            printf("%d %d ", i, dist[i]);
+
+            for(j = count - 1; j >= 0; j--)
+            {
+                printf("%d", path[j]);
+
+                if(j != 0)
+                    printf("->");
+			}             printf("\n");
+        }
+    }
+
+    return 0;
+}
