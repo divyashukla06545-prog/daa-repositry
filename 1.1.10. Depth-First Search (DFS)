@@ -1,0 +1,70 @@
+#include <stdio.h>
+                if (arr[b] > arr[b + 1]) {
+                    int temp = arr[b];
+                    arr[b] = arr[b + 1];
+                    arr[b + 1] = temp;
+                }
+            }
+        }
+
+        // Rebuild the list in ascending order
+        adjList[i] = NULL;
+        for (int a = count - 1; a >= 0; a--) {
+            Node* newNode = createNode(arr[a]);
+            newNode->next = adjList[i];
+            adjList[i] = newNode;
+        }
+    }
+
+
+}
+
+// Depth-First Search (DFS) function
+void DFS(int start) {
+    visited[start] = 1;
+
+    printf("%d ", start);
+
+    Node* curr = adjList[start];
+
+    while (curr != NULL) {
+
+        if (!visited[curr->vertex]) {
+            DFS(curr->vertex);
+        }
+
+        curr = curr->next;
+	}
+    
+}
+
+int main() {
+    int V, E;
+    int u, v, start;
+
+    // Read number of vertices and edges
+    scanf("%d %d", &V, &E);
+
+    // Initialize adjacency list
+    for (int i = 0; i < V; i++) {
+        adjList[i] = NULL;
+        visited[i] = 0;
+    }
+
+    // Read the edges
+    for (int i = 0; i < E; i++) {
+        scanf("%d %d", &u, &v);
+        addEdge(u, v);
+    }
+
+    // Sort the adjacency list for each vertex
+    sortAdjList(V);
+
+    // Read the starting node
+    scanf("%d", &start);
+
+    // Perform DFS starting from the given node
+    DFS(start);
+
+    return 0;
+}
